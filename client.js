@@ -5,9 +5,9 @@ import { getAuth, signInWithCustomToken, sendEmailVerification } from 'firebase/
 // Your Firebase configuration
 const firebaseConfig = {
   // Add your Firebase config object here
-  apiKey: "<api key>",
-  authDomain: "<firebase auth admin>",
-  projectId: "<firebase project Id>",
+  apiKey: "<your api key>",
+  authDomain: "<your auth domain>",
+  projectId: "<your project Id>",
   // ... other config options
 };
 
@@ -118,7 +118,38 @@ const auth = getAuth(app);
     
   }
 
+
+  async function sendNotification(token) {
+        try {
+          // Get custom token
+          const tokenResponse = await fetch('http://localhost:3000/api/send-notification', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token })
+          });
+
+          console.log(token)
+
+          const { message } = await tokenResponse.json();
+          
+
+  
+          console.log(`Wetin server talk ${message}`);
+          
+
+  
+        } catch (error) {
+          console.error(`Error processing user ${email}:`, error);
+        }
+      
+    
+  }
+
 //  sendVerificationEmailtoSpecificPerson('zxFn0vWqi1TfiXHTTMkD7ULlYxe2', 'jameschidiebere2021@gmail.com')
 
 // sendVerificationEmails()
-checkVerifiedUsers() 
+// checkVerifiedUsers() 
+
+sendNotification("cZSb4xHhSgm0fK35HJNw0k:APA91bFHEv6xNXv3TQ8AZiV-BmKgLrhWlwahJ3yCCgVWXVVq7xCt7zUjKjbvpfZZBKyYfpfSI-Gq5hI79ckAEL9gjcYdqCwU3Bwi4LDwxejEGDUzANuqZB0")
